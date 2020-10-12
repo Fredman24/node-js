@@ -1,4 +1,4 @@
-const DB = require('../../common/db');
+const DB = require('../../common/dbUsers');
 
 // плохо - прямая работа с бд (обычно работа с провайдером для бд)
 // const getAll = async () => DB;
