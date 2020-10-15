@@ -20,15 +20,9 @@ const updateBoard = async (id, updatedBoard) => {
   return boardToUpdate;
 };
 const removeBoard = async id => {
-  const boardToRemove = dbBoards.find(el => el.id === id);
   const idxToRemove = dbBoards.findIndex(el => el.id === id);
   dbBoards.splice(idxToRemove, 1);
-  DB.tasks.forEach((task, idx) => {
-    if (task.boardId === id) {
-      DB.tasks.splice(idx, 1);
-    }
-  });
-  return boardToRemove;
+  return true;
 };
 
 module.exports = {

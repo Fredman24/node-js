@@ -8,6 +8,6 @@ const create = async board => dbBoards.createBoard(board);
 
 const update = async (id, board) => dbBoards.updateBoard(id, board);
 
-const remove = async id => dbBoards.removeBoard(id);
+const removeBoard = async id => dbBoards.removeBoard(id);
 
-module.exports = { getAll, get, create, update, remove };
+module.exports = { getAll, get, create, update, removeBoard };

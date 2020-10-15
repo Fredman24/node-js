@@ -3,21 +3,16 @@ const Task = require('./task.model');
 const tasksService = require('./task.service');
 
 router.route('/').get(async (req, res) => {
-  try {
-    const tasks = await tasksService.getAll(req.params.boardId);
-    res.json(tasks);
-    res.status(200).send('OK');
-  } catch (err) {
-    res.status(404).send('Not found');
-  }
+  const tasks = await tasksService.getAll(req.params.boardId);
+  res.json(tasks);
 });
 
 router.route('/:taskId').get(async (req, res) => {
-  try {
-    const task = await tasksService.get(req.params.taskId);
+  const { taskId } = req.params;
+  const task = await tasksService.get(taskId);
+  if (task) {
     res.json(task);
-    res.status(200).send('OK');
-  } catch (err) {
+  } else {
     res.status(404).send('Not found');
   }
 });
@@ -46,13 +41,8 @@ router.route('/:taskId').put(async (req, res) => {
 });
 
 router.route('/:taskId').delete(async (req, res) => {
-  try {
-    const task = tasksService.remove(req.params.boardId, req.params.taskId);
-    res.json(task);
-    res.status(200).send('OK');
-  } catch (err) {
-    res.status(404).send('Not found');
-  }
+  await tasksService.remove(req.params.boardId, req.params.taskId);
+  res.sendStatus(204);
 });
 
 module.exports = router;

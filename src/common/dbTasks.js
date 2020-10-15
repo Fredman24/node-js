@@ -35,10 +35,16 @@ const removeTask = async (boardId, taskId) => {
   return taskToRemove;
 };
 
+const removeTasksFromBoard = async boardId => {
+  const tasksToRemove = dbTasks.filter(task => task.boardId === boardId);
+  tasksToRemove.forEach(task => dbTasks.splice(dbTasks.indexOf(task), 1));
+};
+
 module.exports = {
   getAllTasksFromBoard,
   createTask,
   getTask,
   updateTask,
-  removeTask
+  removeTask,
+  removeTasksFromBoard
 };

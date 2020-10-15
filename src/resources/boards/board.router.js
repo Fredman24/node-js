@@ -3,21 +3,16 @@ const Board = require('./board.model');
 const boardsService = require('./board.service');
 
 router.route('/').get(async (req, res) => {
-  try {
-    const boards = await boardsService.getAll();
-    res.json(boards);
-    res.status(200).send('OK');
-  } catch (err) {
-    res.status(404).send('Not found');
-  }
+  const boards = await boardsService.getAll();
+  res.json(boards);
 });
 
 router.route('/:id').get(async (req, res) => {
-  try {
-    const board = await boardsService.get(req.params.id);
+  const { id } = req.params;
+  const board = await boardsService.get(id);
+  if (board) {
     res.json(board);
-    res.status(200).send('OK');
-  } catch (err) {
+  } else {
     res.status(404).send('Not found');
   }
 });
@@ -38,13 +33,8 @@ router.route('/:id').put(async (req, res) => {
 });
 
 router.route('/:id').delete(async (req, res) => {
-  try {
-    const board = boardsService.remove(req.params.id);
-    res.json(board);
-    res.status(200).send('OK');
-  } catch (err) {
-    res.status(404).send('Not found');
-  }
+  await boardsService.remove(req.params.id);
+  res.sendStatus(204);
 });
 
 module.exports = router;
