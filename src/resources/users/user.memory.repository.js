@@ -1,5 +1,8 @@
 const DB = require('../../common/dbUsers');
 
+const newErr = new Error('User not found');
+newErr.code = 404;
+
 // плохо - прямая работа с бд (обычно работа с провайдером для бд)
 // const getAll = async () => DB;
 // const get = async id => DB.filter(el => el.id === id)[0];
@@ -13,7 +16,7 @@ const getAll = async () => DB.getAllUsers();
 const get = async id => {
   const user = await DB.getUser(id);
   if (!user) {
-    throw new Error(`The user with id: ${id} does not exist.`);
+    throw newErr;
   }
   // else if (user.length > 1) {
   //   throw new Error('DB is corrupted.')
