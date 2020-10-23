@@ -15,12 +15,6 @@ const getAll = async () => DB.getAllUsers();
 
 const get = async id => {
   const user = await DB.getUser(id);
-  if (!user) {
-    throw newErr;
-  }
-  // else if (user.length > 1) {
-  //   throw new Error('DB is corrupted.')
-  // }
   return user;
 };
 

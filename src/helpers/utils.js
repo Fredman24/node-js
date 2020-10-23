@@ -63,4 +63,10 @@ const handleAsyncErrors = cb => async (req, res, next) => {
   }
 };
 
-module.exports = { logInfo, logError, logProcessErrors, handleAsyncErrors };
+module.exports = {
+  logger,
+  logInfo,
+  logError,
+  logProcessErrors,
+  handleAsyncErrors
+};
