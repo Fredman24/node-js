@@ -1,5 +1,5 @@
-const boardsRepo = require('./board.memory.repository');
-const tasksRepo = require('../tasks/task.memory.repository');
+const boardsRepo = require('./board.DB.repository');
+const tasksRepo = require('../tasks/task.DB.repository');
 
 const getAll = () => boardsRepo.getAll();
 
