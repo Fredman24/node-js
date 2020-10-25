@@ -26,6 +26,7 @@ router.route('/').post(
         password: req.body.password,
         name: req.body.name
       })
+      // req.body
     );
     res.json(User.toResponse(user));
   })
@@ -40,8 +41,8 @@ router.route('/:id').put(
 
 router.route('/:id').delete(
   handleAsyncErrors(async (req, res) => {
-    const user = await usersService.remove(req.params.id);
-    res.json(User.toResponse(user));
+    await usersService.remove(req.params.id);
+    res.sendStatus(204);
   })
 );
 

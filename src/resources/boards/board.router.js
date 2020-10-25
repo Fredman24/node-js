@@ -6,7 +6,7 @@ const { handleAsyncErrors } = require('../../helpers/utils');
 router.route('/').get(
   handleAsyncErrors(async (req, res) => {
     const boards = await boardsService.getAll();
-    res.json(boards);
+    res.json(boards.map(Board.toResponse));
   })
 );
 
@@ -14,11 +14,7 @@ router.route('/:id').get(
   handleAsyncErrors(async (req, res) => {
     const { id } = req.params;
     const board = await boardsService.get(id);
-    if (board) {
-      res.json(board);
-    } else {
-      res.status(404).send('Not found');
-    }
+    res.json(Board.toResponse(board));
   })
 );
 
@@ -30,14 +26,14 @@ router.route('/').post(
         columns: req.body.columns
       })
     );
-    res.json(board);
+    res.json(Board.toResponse(board));
   })
 );
 
 router.route('/:id').put(
   handleAsyncErrors(async (req, res) => {
     const board = await boardsService.update(req.params.id, req.body);
-    res.json(board);
+    res.json(Board.toResponse(board));
   })
 );
 

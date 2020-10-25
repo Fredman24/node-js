@@ -6,7 +6,7 @@ const { handleAsyncErrors } = require('../../helpers/utils');
 router.route('/').get(
   handleAsyncErrors(async (req, res) => {
     const tasks = await tasksService.getAll(req.params.boardId);
-    res.json(tasks);
+    res.json(tasks.map(Task.toResponse));
   })
 );
 
@@ -14,11 +14,7 @@ router.route('/:taskId').get(
   handleAsyncErrors(async (req, res) => {
     const { taskId } = req.params;
     const task = await tasksService.get(taskId);
-    if (task) {
-      res.json(task);
-    } else {
-      res.status(404).send('Not found');
-    }
+    res.json(Task.toResponse(task));
   })
 );
 
@@ -34,7 +30,7 @@ router.route('/').post(
         columnId: req.body.columnId
       })
     );
-    res.json(task);
+    res.json(Task.toResponse(task));
   })
 );
 
@@ -45,7 +41,7 @@ router.route('/:taskId').put(
       req.params.taskId,
       req.body
     );
-    res.json(task);
+    res.json(Task.toResponse(task));
   })
 );
 

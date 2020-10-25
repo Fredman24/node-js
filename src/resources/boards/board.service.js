@@ -1,9 +1,16 @@
-const boardsRepo = require('./board.memory.repository');
-const tasksRepo = require('../tasks/task.memory.repository');
+const createError = require('http-errors');
+const boardsRepo = require('./board.DB.repository');
+const tasksRepo = require('../tasks/task.DB.repository');
 
 const getAll = () => boardsRepo.getAll();
 
-const get = id => boardsRepo.get(id);
+const get = async id => {
+  const board = await boardsRepo.get(id);
+  if (!board) {
+    throw new createError.NotFound();
+  }
+  return board;
+};
 
 const create = board => boardsRepo.create(board);
 
