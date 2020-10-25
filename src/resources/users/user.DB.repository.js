@@ -15,7 +15,8 @@ const update = async (id, user) => {
 
 const remove = async id => {
   await Task.updateMany({ userId: id }, { userId: null });
-  return User.deleteOne({ _id: id });
+  await User.deleteOne({ _id: id });
+  return null;
 };
 
 module.exports = { getAll, create, get, remove, update };
