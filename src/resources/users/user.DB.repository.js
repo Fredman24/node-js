@@ -1,5 +1,5 @@
 const User = require('./user.model');
-// const Task = require('../tasks/task.model');
+const Task = require('../tasks/task.model');
 
 // в базу мы ходим через модель
 const getAll = async () => User.find({});
@@ -14,11 +14,8 @@ const update = async (id, user) => {
 };
 
 const remove = async id => {
-  // Task.updateMany({userId: id}, {userId: null})
-  User.deleteOne({ _id: id });
+  await Task.updateMany({ userId: id }, { userId: null });
+  return User.deleteOne({ _id: id });
 };
-// const remove = async id => {
-//   return (await User.deleteOne({_id: id})).deletedCount;
-// }
 
 module.exports = { getAll, create, get, remove, update };

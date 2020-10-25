@@ -14,22 +14,17 @@ router.route('/:id').get(
   handleAsyncErrors(async (req, res) => {
     const { id } = req.params;
     const board = await boardsService.get(id);
-    // if (board) {
     res.json(Board.toResponse(board));
-    // } else {
-    // res.status(404).send('Not found');
-    // }
   })
 );
 
 router.route('/').post(
   handleAsyncErrors(async (req, res) => {
     const board = await boardsService.create(
-      // new Board({
-      //   title: req.body.title,
-      //   columns: req.body.columns
-      // })
-      req.body
+      new Board({
+        title: req.body.title,
+        columns: req.body.columns
+      })
     );
     res.json(Board.toResponse(board));
   })

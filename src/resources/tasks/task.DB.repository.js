@@ -11,7 +11,8 @@ const update = async (boardId, taskId, task) => {
   return get(taskId);
 };
 
-const remove = async (boardId, taskId) => Task.deleteOne({ _id: taskId });
+const remove = async (boardId, taskId) =>
+  Task.deleteOne({ boardId, _id: taskId });
 
 const removeTasks = async boardId => Task.deleteMany({ boardId });
 

@@ -14,11 +14,7 @@ router.route('/:taskId').get(
   handleAsyncErrors(async (req, res) => {
     const { taskId } = req.params;
     const task = await tasksService.get(taskId);
-    // if (task) {
     res.json(Task.toResponse(task));
-    // } else {
-    // res.status(404).send('Not found');
-    // }
   })
 );
 
@@ -33,7 +29,6 @@ router.route('/').post(
         boardId: req.params.boardId,
         columnId: req.body.columnId
       })
-      // req.body
     );
     res.json(Task.toResponse(task));
   })
