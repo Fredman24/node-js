@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 const { PORT, MONGO_CONNECTION_STRING } = require('./common/config');
 const app = require('./app');
-const { logger } = require('./helpers/utils');
+const { logger } = require('./helpers/logger');
 
 mongoose.connect(MONGO_CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-  // useFindAndModify: false
 });
 
 const db = mongoose.connection;

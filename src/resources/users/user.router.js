@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const User = require('./user.model');
 const usersService = require('./user.service');
-const { handleAsyncErrors } = require('../../helpers/utils');
+const { handleAsyncErrors } = require('../../helpers/errors');
 
 router.route('/').get(
   handleAsyncErrors(async (req, res) => {
@@ -13,7 +13,7 @@ router.route('/').get(
 
 router.route('/:id').get(
   handleAsyncErrors(async (req, res) => {
-    const user = await usersService.get(req.params.id);
+    const user = await usersService.getById(req.params.id);
     res.json(User.toResponse(user));
   })
 );
@@ -26,7 +26,6 @@ router.route('/').post(
         password: req.body.password,
         name: req.body.name
       })
-      // req.body
     );
     res.json(User.toResponse(user));
   })
@@ -45,5 +44,12 @@ router.route('/:id').delete(
     res.sendStatus(204);
   })
 );
+
+// router.route('/').delete(
+//   handleAsyncErrors(async (req, res) => {
+//     await usersService.removeAll();
+//     res.sendStatus(204);
+//   })
+// );
 
 module.exports = router;

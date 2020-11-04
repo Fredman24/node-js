@@ -1,11 +1,19 @@
+const uuid = require('uuid');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
     name: String,
-    login: String,
-    password: String
+    login: {
+      type: String,
+      unique: true
+    },
+    password: String,
+    _id: {
+      type: String,
+      default: uuid
+    }
   },
   { versionKey: false }
 );

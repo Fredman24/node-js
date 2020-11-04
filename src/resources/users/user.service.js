@@ -1,13 +1,11 @@
-const usersRepo = require('./user.DB.repository');
 const createError = require('http-errors');
-// const newErr = new Error('User not found');
-// newErr.code = 404;
+const usersRepo = require('./user.DB.repository');
+const { hashPassword } = require('../../helpers/hash');
 
 const getAll = () => usersRepo.getAll();
 
-// const get = id => usersRepo.get(id);
-const get = async id => {
-  const user = await usersRepo.get(id);
+const getById = async id => {
+  const user = await usersRepo.getById(id);
 
   if (!user) {
     throw new createError.NotFound();
@@ -15,10 +13,22 @@ const get = async id => {
   return user;
 };
 
-const create = user => usersRepo.create(user);
+const getByLogin = login => usersRepo.getByLogin(login);
+
+const create = async user => {
+  const password = { user };
+  const hashedPassword = await hashPassword(password);
+  const userWithHash = {
+    ...user,
+    password: hashedPassword
+  };
+  return await usersRepo.create(userWithHash);
+};
 
 const update = (id, user) => usersRepo.update(id, user);
 
 const remove = id => usersRepo.remove(id);
 
-module.exports = { getAll, get, create, update, remove };
+// const removeAll = () => usersRepo.removeAll();
+
+module.exports = { getAll, getById, create, update, remove, getByLogin };

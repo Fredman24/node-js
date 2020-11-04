@@ -5,12 +5,16 @@ const YAML = require('yamljs');
 const userRouter = require('./resources/users/user.router');
 const boardRouter = require('./resources/boards/board.router');
 const taskRouter = require('./resources/tasks/task.router');
-const { logInfo, logError, logProcessErrors } = require('./helpers/utils');
+const loginRouter = require('./resources/login/login.router');
+const { logInfo, logError, logProcessErrors } = require('./helpers/logger');
+const { checkToken } = require('./helpers/token');
 
 const app = express();
-
+app.disable('x-powered-by');
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
+// app.use(helmet());
+// app.use(cors());
 app.use(express.json());
 
 app.use(logInfo);
@@ -25,6 +29,8 @@ app.use('/', (req, res, next) => {
   next();
 });
 
+app.use(checkToken);
+app.use('/login', loginRouter);
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 boardRouter.use('/:boardId/tasks', taskRouter);
@@ -36,11 +42,5 @@ app.use(logError);
 process.on('unhandledRejection', logProcessErrors);
 
 process.on('uncaughtException', logProcessErrors);
-
-// ПУНКТ 3
-// throw Error('Oops!');
-
-// ПУНКТ 4
-// Promise.reject(Error('Oops!'));
 
 module.exports = app;
