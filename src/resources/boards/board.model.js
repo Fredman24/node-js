@@ -1,3 +1,4 @@
+// const uuid = require('uuid');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -13,6 +14,10 @@ const boardSchema = new Schema(
   {
     title: String,
     columns: [columnSchema]
+    // _id: {
+    //   type: String,
+    //   default: uuid
+    // }
   },
   { versionKey: false }
 );
