@@ -20,13 +20,7 @@ router.route('/:id').get(
 
 router.route('/').post(
   handleAsyncErrors(async (req, res) => {
-    const user = await usersService.create(
-      new User({
-        login: req.body.login,
-        password: req.body.password,
-        name: req.body.name
-      })
-    );
+    const user = await usersService.create(req.body);
     res.json(User.toResponse(user));
   })
 );

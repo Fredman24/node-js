@@ -16,7 +16,7 @@ const getById = async id => {
 const getByLogin = login => usersRepo.getByLogin(login);
 
 const create = async user => {
-  const password = { user };
+  const { password } = user;
   const hashedPassword = await hashPassword(password);
   const userWithHash = {
     ...user,
@@ -25,7 +25,15 @@ const create = async user => {
   return await usersRepo.create(userWithHash);
 };
 
-const update = (id, user) => usersRepo.update(id, user);
+const update = async (id, user) => {
+  const { password } = user;
+  const hashedPassword = await hashPassword(password);
+  const userWithHash = {
+    ...user,
+    password: hashedPassword
+  };
+  return await usersRepo.update(id, userWithHash);
+};
 
 const remove = id => usersRepo.remove(id);
 

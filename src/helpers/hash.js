@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const SALT_ROUNDS = require('../common/config');
+const { SALT_ROUNDS } = require('../common/config');
 
 const hashPassword = async password => {
   try {
